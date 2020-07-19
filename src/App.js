@@ -4,9 +4,13 @@ import { useWindowSize } from 'react-hooks-window-size'
 const superagent = require("superagent");
 
 // Split  to allow for greater flexibility in the request
-const url =
+const unSplashURL =
   "https://api.unsplash.com/photos/random/?count=1&query=sport&orientation=portrait&client_id=";
-const clientID = "eK3hqxpfSE979oi91j3VGsUERwEEj3YvGIOifB_5hfE";
+const unSplashClientID = "eK3hqxpfSE979oi91j3VGsUERwEEj3YvGIOifB_5hfE";
+
+const emojiApiURL = "https://emoji-api.com/categories/people-body?access_key="
+const emojiApiID = "a81343835b9c7558bb80968e11728528a3f8384a"
+
 
 const simpleGet = (options) => {
   superagent.get(options.url).then(function (res) {
@@ -14,7 +18,8 @@ const simpleGet = (options) => {
   });
 };
 
-const photosUrl = `${url}${clientID}`;
+// Pull into the react component to react to different screen widths
+const photosUrl = `${unSplashURL}${unSplashClientID}`;
 
 function App() {
   const size = useWindowSize()
