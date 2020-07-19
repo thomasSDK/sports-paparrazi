@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useWindowSize } from 'react-hooks-window-size'
 const superagent = require("superagent");
 
 // Split  to allow for greater flexibility in the request
@@ -16,6 +17,7 @@ const simpleGet = (options) => {
 const photosUrl = `${url}${clientID}`;
 
 function App() {
+  const size = useWindowSize()
   const [photos, setPhotos] = useState(["hello"]);
 
   // useEffect(() => {
@@ -29,6 +31,8 @@ function App() {
   //   });
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+  
+  console.log(size)
 
   return (
     <StyledApp>
@@ -37,6 +41,8 @@ function App() {
       ) : (
         <>
           <Reflection
+            height={size.height * 0.5}
+            width={(size.height* 0.5) * 0.6}
             title={"footballl"}
             image={
               "https://images.unsplash.com/photo-1583262572082-732a51f9d92a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjE0ODU4M30"
@@ -83,8 +89,8 @@ const StyledImage = styled.img`
 `;
 
 const Reflection = styled.div`
-  width: 30vw;
-  height: 40vw;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
   position: relative;
   background:url("${(props) => props.image}");
   background-position: bottom;
