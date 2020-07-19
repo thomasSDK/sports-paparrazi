@@ -8,9 +8,10 @@ const unSplashURL =
   "https://api.unsplash.com/photos/random/?count=1&query=sport&orientation=portrait&client_id=";
 const unSplashClientID = "eK3hqxpfSE979oi91j3VGsUERwEEj3YvGIOifB_5hfE";
 
-const emojiApiURL = "https://emoji-api.com/categories/people-body?access_key="
-const emojiApiID = "a81343835b9c7558bb80968e11728528a3f8384a"
+const emojiApiURL = "https://emoji-api.com/categories/people-body?access_key=";
+const emojiApiID = "a81343835b9c7558bb80968e11728528a3f8384a";
 
+const emojiURL = `${emojiApiURL}${emojiApiID}`;
 
 const simpleGet = (options) => {
   superagent.get(options.url).then(function (res) {
@@ -21,10 +22,15 @@ const simpleGet = (options) => {
 // Pull into the react component to react to different screen widths
 const photosUrl = `${unSplashURL}${unSplashClientID}`;
 
-function App() {
-  const size = useWindowSize()
-  const [photos, setPhotos] = useState([]);
+const emojis = [];
 
+function App() {
+  const size = useWindowSize();
+  const [photos, setPhotos] = useState([]);
+  const [emojiCodes, setEmojiCodes] = useState([]);
+  let canvasRef = useRef();
+
+  // API Requests
   useEffect(() => {
     simpleGet({
       url: photosUrl,
@@ -34,9 +40,19 @@ function App() {
         console.log(res.body);
       },
     });
+    simpleGet({
+      url: emojiURL,
+      onSuccess: (res) => {
+        setEmojiCodes(
+          res.body
+            .filter((emoji) => emoji.subGroup === "person-sport")
+            .map((emoji) => emoji.codePoint)
+        );
+      },
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   return (
     <StyledApp>
       {photos.length === 0 ? (
@@ -45,13 +61,14 @@ function App() {
         <>
           <Reflection
             height={size.height * 0.5}
-            width={(size.height* 0.5) * 0.6}
+            width={size.height * 0.5 * 0.6}
             title={photos[0].alt_description}
-            image={
-              photos[0].urls.regular
-            }
+            image={photos[0].urls.regular}
           />
-          <StyledImage src={photos[0].urls.regular} alt={photos[0].alt_description} />
+          <StyledImage
+            src={photos[0].urls.regular}
+            alt={photos[0].alt_description}
+          />
           <TitleText>{photos[0].description}</TitleText>
           <a href={photos[0].user.portfolio_url}>
             <Name>@{photos[0].user.name}</Name>
