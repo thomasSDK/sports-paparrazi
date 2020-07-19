@@ -55,11 +55,6 @@ function init(canvas) {
 
   emojiCanvas.width = rect.width * dpr;
   emojiCanvas.height = rect.height * dpr;
-  console.log(dpr)
-  // emojiCanvas.width = rect.width * dpr;
-  // emojiCanvas.height = rect.height * dpr;
-  // Scale all drawing operations by the dpr, so you
-  // don't have to worry about the difference.
   emojiContext.scale(dpr, dpr);
   window.requestAnimationFrame(draw);
 }
@@ -92,7 +87,6 @@ function App() {
   useEffect(() => {
     simpleGet({
       url: photosUrl,
-      // returns an array of photos
       onSuccess: (res) => {
         setPhotos(res.body);
         console.log(res.body);
@@ -115,6 +109,7 @@ function App() {
             title={photos[0].alt_description}
             image={photos[0].urls.regular}
           />
+          {/* Image does not display but left in for accessibility */}
           <StyledImage
             src={photos[0].urls.regular}
             alt={photos[0].alt_description}
@@ -130,6 +125,8 @@ function App() {
 }
 
 export default App;
+
+// CSS
 
 const StyledApp = styled.div`
   height: 100vh;

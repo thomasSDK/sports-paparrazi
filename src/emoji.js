@@ -1,6 +1,5 @@
 export default class Emoji {
   constructor(width, emojiCode) {
-    console.log(emojiCode)
     this.code = emojiCode;
     this.x = Math.random() * (width - 0) + 0;
     this.y = 0;
