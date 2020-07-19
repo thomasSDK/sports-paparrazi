@@ -18,22 +18,20 @@ const photosUrl = `${url}${clientID}`;
 
 function App() {
   const size = useWindowSize()
-  const [photos, setPhotos] = useState(["hello"]);
+  const [photos, setPhotos] = useState([]);
 
-  // useEffect(() => {
-  //   simpleGet({
-  //     url: photosUrl,
-  //     // returns an array of photos
-  //     onSuccess: (res) => {
-  //       setPhotos(res.body);
-  //       console.log(res.body);
-  //     },
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    simpleGet({
+      url: photosUrl,
+      // returns an array of photos
+      onSuccess: (res) => {
+        setPhotos(res.body);
+        console.log(res.body);
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
-  console.log(size)
-
   return (
     <StyledApp>
       {photos.length === 0 ? (
@@ -43,20 +41,15 @@ function App() {
           <Reflection
             height={size.height * 0.5}
             width={(size.height* 0.5) * 0.6}
-            title={"footballl"}
+            title={photos[0].alt_description}
             image={
-              "https://images.unsplash.com/photo-1583262572082-732a51f9d92a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjE0ODU4M30"
+              photos[0].urls.regular
             }
           />
-          <StyledImage
-            src={
-              "https://images.unsplash.com/photo-1583262572082-732a51f9d92a?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjE0ODU4M30"
-            }
-            alt={"foootballl"}
-          />
-          <TitleText>{"Hello Sport"}</TitleText>
-          <a href={"www.google.com"}>
-            <Name>@{"Thomas"}</Name>
+          <StyledImage src={photos[0].urls.regular} alt={photos[0].alt_description} />
+          <TitleText>{photos[0].description}</TitleText>
+          <a href={photos[0].user.portfolio_url}>
+            <Name>@{photos[0].user.name}</Name>
           </a>
         </>
       )}
