@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useWindowSize } from 'react-hooks-window-size'
+import { useWindowSize } from "react-hooks-window-size";
+import Emoji, { getRandomInt } from "./emoji";
 const superagent = require("superagent");
 
 // Split  to allow for greater flexibility in the request
@@ -19,18 +20,75 @@ const simpleGet = (options) => {
   });
 };
 
+// Would be good to make this into an object
+let emojiCodes = [];
+const emojis = [];
+let emojiCanvas;
+let emojiContext;
+
+simpleGet({
+  url: emojiURL,
+  onSuccess: (res) => {
+    emojiCodes = res.body
+      .filter((emoji) => emoji.subGroup === "person-sport")
+      .map((emoji) => emoji.character);
+    setInterval(
+      () =>
+        emojis.push(
+          new Emoji(
+            emojiCanvas.width,
+            emojiCodes[getRandomInt(0, emojiCodes.length)]
+          )
+        ),
+      500
+    );
+  },
+});
+
+function init(canvas) {
+  emojiCanvas = canvas;
+  emojiContext = canvas.getContext("2d");
+
+  //https://www.html5rocks.com/en/tutorials/canvas/hidpi/
+  var dpr = window.devicePixelRatio || 1;
+  var rect = emojiCanvas.getBoundingClientRect();
+
+  emojiCanvas.width = rect.width * dpr;
+  emojiCanvas.height = rect.height * dpr;
+  console.log(dpr)
+  // emojiCanvas.width = rect.width * dpr;
+  // emojiCanvas.height = rect.height * dpr;
+  // Scale all drawing operations by the dpr, so you
+  // don't have to worry about the difference.
+  emojiContext.scale(dpr, dpr);
+  window.requestAnimationFrame(draw);
+}
+
+function draw() {
+  emojiContext.clearRect(0, 0, emojiCanvas.width, emojiCanvas.height); // clear canvas
+
+  emojis.forEach((emoji, i) => {
+    emojiContext.font = `${emoji.scale}px sans-serif`;
+    emojiContext.fillText(emoji.code, emoji.x, emoji.y);
+    emoji.draw();
+
+    if (emoji.y > emojiCanvas.height) {
+      emojis.splice(i, 1);
+    }
+  });
+
+  window.requestAnimationFrame(draw);
+}
+
 // Pull into the react component to react to different screen widths
 const photosUrl = `${unSplashURL}${unSplashClientID}`;
-
-const emojis = [];
 
 function App() {
   const size = useWindowSize();
   const [photos, setPhotos] = useState([]);
-  const [emojiCodes, setEmojiCodes] = useState([]);
   let canvasRef = useRef();
 
-  // API Requests
+  // Unsplash
   useEffect(() => {
     simpleGet({
       url: photosUrl,
@@ -40,21 +98,13 @@ function App() {
         console.log(res.body);
       },
     });
-    simpleGet({
-      url: emojiURL,
-      onSuccess: (res) => {
-        setEmojiCodes(
-          res.body
-            .filter((emoji) => emoji.subGroup === "person-sport")
-            .map((emoji) => emoji.codePoint)
-        );
-      },
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    init(canvasRef.current);
   }, []);
 
   return (
     <StyledApp>
+      <StyledCanvas ref={canvasRef} />
       {photos.length === 0 ? (
         console.log("Loading time")
       ) : (
@@ -87,6 +137,12 @@ const StyledApp = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const StyledCanvas = styled.canvas`
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
 `;
 
 const TitleText = styled.h1`
