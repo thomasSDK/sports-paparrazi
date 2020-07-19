@@ -31,22 +31,37 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledApp>
+      {photos.length === 0 ? (
+        console.log("Loading time")
+      ) : (
+        <>
+          <StyledImage src={photos[0].urls.regular} alt={photos[0].alt_description} />
+          <TitleText>{photos[0].description}</TitleText>
+          <a href={photos[0].user.portfolio_url}>
+            <p>@{photos[0].user.name}</p>
+          </a>
+        </>
+      )}
+    </StyledApp>
   );
 }
 
 export default App;
+
+const StyledApp = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+`
+
+const StyledImage = styled.img`
+  width: 30vw
+`
+
+const TitleText = styled.h1`
+font-family: Moonhouse, serif;
+`
