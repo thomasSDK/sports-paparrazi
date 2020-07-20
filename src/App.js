@@ -114,10 +114,12 @@ function App() {
             src={photos[0].urls.regular}
             alt={photos[0].alt_description}
           />
-          <TitleText>{photos[0].description}</TitleText>
-          <a href={photos[0].user.portfolio_url}>
-            <Name>@{photos[0].user.name}</Name>
-          </a>
+          <TextContainer width={size.height * 0.5 * 0.6}>
+            <TitleText>{photos[0].description}</TitleText>
+            <a href={photos[0].user.portfolio_url}>
+              <Name>@{photos[0].user.name}</Name>
+            </a>
+          </TextContainer>
         </>
       )}
     </StyledApp>
@@ -142,12 +144,21 @@ const StyledCanvas = styled.canvas`
   width: 100vw;
 `;
 
+const TextContainer = styled.div`
+  width: ${(props) => props.width}px;
+  text-align: center;
+`;
+
 const TitleText = styled.h1`
   font-family: Moonhouse, serif;
+  position: relative;
+  padding-top: 10px;
+  font-size: 2vmin;
   z-index: 1;
 `;
 
 const Name = styled.p`
+  font-family: Trueno, serif;
   position: relative;
   z-index: 1;
 `;
