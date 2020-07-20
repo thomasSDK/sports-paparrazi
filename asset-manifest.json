@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/sports-paparazzi/static/css/main.f6303228.chunk.css",
-    "main.js": "/sports-paparazzi/static/js/main.9b939ed1.chunk.js",
-    "main.js.map": "/sports-paparazzi/static/js/main.9b939ed1.chunk.js.map",
+    "main.css": "/sports-paparazzi/static/css/main.d00bec9d.chunk.css",
+    "main.js": "/sports-paparazzi/static/js/main.506f2c8d.chunk.js",
+    "main.js.map": "/sports-paparazzi/static/js/main.506f2c8d.chunk.js.map",
     "runtime-main.js": "/sports-paparazzi/static/js/runtime-main.9d5239c4.js",
     "runtime-main.js.map": "/sports-paparazzi/static/js/runtime-main.9d5239c4.js.map",
     "static/js/2.745af768.chunk.js": "/sports-paparazzi/static/js/2.745af768.chunk.js",
     "static/js/2.745af768.chunk.js.map": "/sports-paparazzi/static/js/2.745af768.chunk.js.map",
     "index.html": "/sports-paparazzi/index.html",
-    "precache-manifest.672c4e37178fb6580e54052621282ed2.js": "/sports-paparazzi/precache-manifest.672c4e37178fb6580e54052621282ed2.js",
+    "precache-manifest.8f727124c422896b167f4cf6018cee04.js": "/sports-paparazzi/precache-manifest.8f727124c422896b167f4cf6018cee04.js",
     "service-worker.js": "/sports-paparazzi/service-worker.js",
-    "static/css/main.f6303228.chunk.css.map": "/sports-paparazzi/static/css/main.f6303228.chunk.css.map",
+    "static/css/main.d00bec9d.chunk.css.map": "/sports-paparazzi/static/css/main.d00bec9d.chunk.css.map",
     "static/js/2.745af768.chunk.js.LICENSE.txt": "/sports-paparazzi/static/js/2.745af768.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/sports-paparazzi/static/media/Moonhouse.48419a41.ttf"
+    "static/media/index.css": "/sports-paparazzi/static/media/Trueno.d1e41148.otf"
   },
   "entrypoints": [
     "static/js/runtime-main.9d5239c4.js",
     "static/js/2.745af768.chunk.js",
-    "static/css/main.f6303228.chunk.css",
-    "static/js/main.9b939ed1.chunk.js"
+    "static/css/main.d00bec9d.chunk.css",
+    "static/js/main.506f2c8d.chunk.js"
   ]
 }
