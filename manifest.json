@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Sports Paparazzi",
+  "name": "View an Unsplash sports photo with raining emoji",
   "icons": [
     {
       "src": "favicon.ico",
